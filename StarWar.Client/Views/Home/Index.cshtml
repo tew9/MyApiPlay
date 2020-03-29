@@ -1,0 +1,110 @@
+﻿@model StarWar.Client.Models.ActorModel;
+@{
+    ViewBag.Title = "Tango APi Play";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+ }
+<h2>StarWard</h2>
+<form action="/home/index" method="post">
+    <div class="form-group">
+      <label for="exampleInputPassword1">Enter one number from 1 - 10 to return star war actorinfo</label>
+      <input type="number" min="1"  max="88" asp-for="@Model.Number" class="form-control"  placeholder="actor's number"/>
+    </div>
+@{ 
+   if(Model != null){
+    <table class="table">
+        <tr>
+            <th scope="col">name</th>
+            <th scope="col">height</th>
+            <th scope="col">mass</th>
+            <th scope="col">hair_color</th>
+            <th scope="col">skin_color</th>
+            <th scope="col">eyecolor</th>
+            <th scope="col">birth_year</th>
+            <th scope="col">gender</th>
+            <th scope="col">homeworld</th>
+            <th scope="col">films</th>
+            <th scope="col">species</th>
+            <th scope="col">vehicles</th>
+            <th scope="col">starships</th>
+            <th scope="col">created</th>
+            <th scope="col">edited</th>
+            <th scope="col">url</th>
+        </tr>
+        <tr>
+            <td>@Model.name</td>
+            <td>@Model.height</td>
+            <td>@Model.mass</td>
+            <td>@Model.hair_color</td>
+            <td>@Model.skin_color</td>
+            <td>@Model.eye_color</td>
+            <td>@Model.birth_year</td>
+            <td>@Model.gender</td>
+            <td>@Model.homeworld</td>
+            <td>
+                @{
+                if(Model.films != null){
+                <table>
+                    @foreach (var item in Model.films)
+                    {
+                    <tr>
+                        <td>@item</td>  
+                    </tr>    
+                    }
+                </table>
+                    }
+                }
+            </td>
+            <td>
+                @{
+                if(Model.films != null){
+                <table>
+                    @foreach (var item in Model.species)
+                    {
+                    <tr>
+                        <td>@item</td>  
+                    </tr> 
+                    }
+                
+                </table>
+                }
+                }
+            </td>
+            <td>
+                @{
+                if(Model.films != null){
+                <table>
+                    @foreach (var item in Model.vehicles)
+                    {
+                    <tr>
+                        <td>@item</td>  
+                    </tr>   
+                    }
+                </table>
+                }
+                }
+            </td>
+            <td>
+                @{
+                if(Model.films != null){
+                <table>
+                    @foreach (var item in Model.starships)
+                    {
+                    <tr>
+                        <td>@item</td>  
+                    </tr>    
+                    }
+                </table>
+                }
+                }
+            </td>
+            <td>@Model.created</td>
+            <td>@Model.edited</td>
+            <td>@Model.url</td>
+        </tr>
+    </table>
+   }
+ <button type="submit" class="btn btn-primary">Submit</button>
+}
+ </form>
+
+
