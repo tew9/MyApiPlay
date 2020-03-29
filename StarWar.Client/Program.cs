@@ -21,7 +21,7 @@ namespace StarWar.Client
                 .ConfigureWebHostDefaults(webBuilder =>
                 { 
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls("http://localhost:4000");
+                    // webBuilder.UseUrls("http://localhost:4000");
                 });
     }
 }
