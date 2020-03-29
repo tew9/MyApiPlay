@@ -74,7 +74,7 @@ stages:
               appType: "webAppContainer"
               WebAppName: "trainingdotnet2020"
               DockerNamespace: "tangotew"
-              DockerRepository: "MyApIPlay"
+              DockerRepository: "starwarplay"
 
 trigger:
   - master
@@ -83,4 +83,4 @@ variables:
   - name: image_name
     value: tangotew/starwarplay
   - name: working_dir
-    value: $(System.DefaultWorkingDirectory)
+    value: $(System.DefaultWorkingDirectory)/StarWar.Client
