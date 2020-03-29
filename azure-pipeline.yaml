@@ -83,4 +83,4 @@ variables:
   - name: image_name
     value: tangotew/starwarplay
   - name: working_dir
-    value: $(System.DefaultWorkingDirectory)/StarWar.Client
+    value: $(System.DefaultWorkingDirectory)
