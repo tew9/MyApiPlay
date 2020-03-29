@@ -7,4 +7,4 @@ RUN dotnet publish --configuration Release -o out PizzaBox.Client/PizzaBox.Clien
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR dist/
 COPY --from=build p1/out/ ./
-CMD ["dotnet", "PizzaBox.Client.dll"]
+CMD ["dotnet", "StarWar.Client.dll"]
