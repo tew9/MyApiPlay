@@ -81,6 +81,6 @@ trigger:
 
 variables:
   - name: image_name
-    value: fredbelotte/p1proj
+    value: tangotew/starwarplay
   - name: working_dir
     value: $(System.DefaultWorkingDirectory)
