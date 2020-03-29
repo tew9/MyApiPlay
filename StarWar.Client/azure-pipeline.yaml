@@ -1,0 +1,86 @@
+name: $(date:yyyyMMdd)$(rev:.rr)
+
+pr:
+  - master
+
+stages:
+  - stage: build
+    jobs:
+      - job:
+        pool:
+          vmImage: ubuntu-18.04
+        steps:
+          - script: dotnet build
+            workingDirectory: $(working_dir)
+
+  - stage: test
+    jobs:
+      - job:
+        pool:
+          vmImage: ubuntu-18.04
+        steps:
+          - script: dotnet test --collect:"XPlat Code Coverage"
+            workingDirectory: $(working_dir)
+
+  # - stage: analyze
+  #   jobs:
+  #     - job:
+  #       pool:
+  #         vmImage: ubuntu-18.04
+  #       steps:
+  #         - task: DotnetGlobalToolInstaller@0
+  #           inputs:
+  #             name: "dotnet-sonarscanner"
+  #         - script: |
+  #             dotnet sonarscanner begin /k:"2002-24-dotnet_training-code" /o:"2002-24-dotnet" /d:sonar.login="$SONAR_LOGIN" /d:sonar.host.url=https://sonarcloud.io
+  #             dotnet build
+  #             dotnet test --collect:"XPlat Code Coverage"
+  #             dotnet sonarscanner end /d:sonar.login="$SONAR_LOGIN"
+  #           workingDirectory: $(working_dir)
+  #           env:
+  #             SONAR_LOGIN: $(sonar_login)
+
+  - stage: pack
+    jobs:
+      - job:
+        pool:
+          vmImage: ubuntu-18.04
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: "starwarplay"
+              command: "login"
+          - script: |
+              docker image build -f dockerfile -t $DOCKER_IMAGE .
+              docker image push $DOCKER_IMAGE
+            workingDirectory: $(working_dir)
+            env:
+              DOCKER_IMAGE: $(image_name)
+          - task: Docker@2
+            inputs:
+              containerRegistry: "starwarplay"
+              command: "logout"
+
+  - stage: deploy
+    jobs:
+      - job:
+        pool:
+          vmImage: ubuntu-18.04
+        steps:
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: "AzureRM"
+              azureSubscription: "myapiplayAzure"
+              appType: "webAppContainer"
+              WebAppName: "trainingdotnet2020"
+              DockerNamespace: "tangotew"
+              DockerRepository: "MyApIPlay"
+
+trigger:
+  - master
+
+variables:
+  - name: image_name
+    value: fredbelotte/p1proj
+  - name: working_dir
+    value: $(System.DefaultWorkingDirectory)
