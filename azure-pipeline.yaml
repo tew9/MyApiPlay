@@ -72,7 +72,7 @@ stages:
               ConnectionType: "AzureRM"
               azureSubscription: "myapiplayAzure"
               appType: "webAppContainer"
-              WebAppName: "trainingdotnet2020"
+              WebAppName: "MyApIPlay"
               DockerNamespace: "tangotew"
               DockerRepository: "starwarplay"
 
